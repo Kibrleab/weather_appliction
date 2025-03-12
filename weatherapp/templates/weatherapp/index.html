@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body style="background: url('{{ image_url }}') no-repeat center center/cover;">
+
+    <div class="container">
+        <h1 class="fade-in">Weather App</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="city" placeholder="Enter city" required>
+            <button type="submit">Search <i class="fas fa-search"></i></button>
+        </form>
+
+        {% if description %}
+        <div class="weather-info slide-in">
+            <img src="https://openweathermap.org/img/wn/{{ icon }}@2x.png" alt="Weather Icon">
+            <h2>{{ city | title }}</h2>
+            <p>{{ description }}</p>
+            <h3>{{ temp }}°C</h3>
+        </div>
+        {% endif %}
+    </div>
+
+    {% if messages %}
+        {% for message in messages %}
+            <p style="color: red;">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+ 
+</body>
+</html>
